@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "smart.air.pollution.alert";
+option java_outer_classname = "AlertServiceImpl";
+
+
+service AlertService {
+  // Client Streaming RPC
+  rpc SubscribeToPollutantAlerts (stream SubscribeToPollutantAlertsRequest) returns (google.protobuf.Empty) {}
+
+  // Unary RPC
+  rpc UnsubscribeFromAlerts (UnsubscribeFromAlertsRequest) returns (google.protobuf.Empty) {}
+}
+
+message SubscribeToPollutantAlertsRequest {
+  string location = 1;
+  repeated Pollutant pollutants = 2;
+}
+
+message UnsubscribeFromAlertsRequest {
+  string location = 1;
+}
+
+message Pollutant {
+  string name = 1;
+  float level = 2;
+}
